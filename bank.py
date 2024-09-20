@@ -17,6 +17,16 @@ column_names = ['age', 'job', 'marital', 'education', 'default', 'balance',
 train_data = pd.read_csv(train_file, header=None, names=column_names)
 test_data = pd.read_csv(test_file, header=None, names=column_names)
 
+# replace 'unknown' with the majority value 
+def replace_unknown_with_majority(data):
+    for col in data.columns:
+        if 'unknown' in data[col].values:
+            majority_value = data.loc[data[col] != 'unknown', col].mode()[0]
+            data[col].replace('unknown', majority_value, inplace=True)
+    return data
+
+train_data = replace_unknown_with_majority(train_data)
+
 # Encode data
 categorical_columns = ['job', 'marital', 'education', 'default', 'housing', 
                        'loan', 'contact', 'month', 'poutcome', 'y']
