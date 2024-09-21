@@ -3,7 +3,6 @@ import numpy as np
 from sklearn.metrics import accuracy_score
 from id3_algorithms import DecisionTree
 
-
 # Dataset path
 train_file = 'bank/train.csv'
 test_file = 'bank/test.csv'
@@ -26,6 +25,17 @@ def replace_unknown_with_majority(data):
     return data
 
 train_data = replace_unknown_with_majority(train_data)
+test_data = replace_unknown_with_majority(test_data)
+
+# Convert numerical features to binary
+numerical_columns = ['age', 'balance', 'day', 'duration', 'campaign', 'pdays', 'previous']
+def convert_numerical_to_binary(data, numerical_columns):
+    for col in numerical_columns:
+        median_value = data[col].median()
+        data[col] = np.where(data[col] > median_value, 1, 0)
+    return data
+train_data = convert_numerical_to_binary(train_data, numerical_columns)
+test_data = convert_numerical_to_binary(test_data, numerical_columns)
 
 # Encode data
 categorical_columns = ['job', 'marital', 'education', 'default', 'housing', 
