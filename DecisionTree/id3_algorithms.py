@@ -7,11 +7,11 @@ def entropy(y):
     probs = counts / len(y)
     return -np.sum(probs * np.log2(probs))
 
-def information_gain(X, y, feature):
-    parent_entropy = entropy(y)
-    values, counts = np.unique(X[feature], return_counts=True)
-    weighted_entropy = np.sum((counts / len(X)) * [entropy(y[X[feature] == v]) for v in values])
-    return parent_entropy - weighted_entropy
+# def information_gain(X, y, feature):
+#     parent_entropy = entropy(y)
+#     values, counts = np.unique(X[feature], return_counts=True)
+#     weighted_entropy = np.sum((counts / len(X)) * [entropy(y[X[feature] == v]) for v in values])
+#     return parent_entropy - weighted_entropy
 
 # Majority Error
 def majority_error(y):
@@ -83,3 +83,44 @@ class DecisionTree:
                 return self.predict(X, tree)
             else:
                 return tree
+            
+class DecisionStump:
+    def __init__(self, criterion):
+        self.criterion = criterion
+        self.tree = None
+    
+    def fit(self, X, y, weights):
+        # Base case, depth 1
+        if self.criterion == 'information_gain':
+            gains = [information_gain(X, y, feature, weights) for feature in X.columns]
+        elif self.criterion == 'majority_error':
+            gains = [majority_error_gain(X, y, feature, weights) for feature in X.columns]
+        elif self.criterion == 'gini_index':
+            gains = [gini_gain(X, y, feature, weights) for feature in X.columns]
+        
+        # Choose the best feature
+        best_feature = X.columns[np.argmax(gains)]
+        # print(f"Training stump with weights: {weights[:10]}")
+        
+        self.tree = {best_feature: {}}
+        for value in np.unique(X[best_feature]):
+            subtree = np.argmax(np.bincount(y[X[best_feature] == value], weights[X[best_feature] == value]))
+            self.tree[best_feature][value] = subtree
+    
+    def predict(self, X):
+        for feature in self.tree.keys():
+            value = X[feature]  # Ensure X is a single row here
+            return self.tree[feature].get(value, np.random.choice([0, 1]))  # Predict based on the tree
+
+
+def weighted_entropy(y, weights):
+    values, counts = np.unique(y, return_counts=True)
+    weighted_counts = np.array([np.sum(weights[y == v]) for v in values])
+    probs = weighted_counts / np.sum(weights)
+    return -np.sum(probs * np.log2(probs))
+
+def information_gain(X, y, feature, weights):
+    parent_entropy = weighted_entropy(y, weights)
+    values, counts = np.unique(X[feature], return_counts=True)
+    weighted_entropy_val = np.sum((counts / len(X)) * [weighted_entropy(y[X[feature] == v], weights[X[feature] == v]) for v in values])
+    return parent_entropy - weighted_entropy_val
