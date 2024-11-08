@@ -4,8 +4,8 @@ from sklearn.metrics import accuracy_score
 from id3_algorithms import DecisionTree
 
 # Dataset path
-train_file = '../bank/train.csv'
-test_file = '../bank/test.csv'
+train_file = '../Datasets/bank/train.csv'
+test_file = '../Datasets/bank/test.csv'
 
 # Column Names
 column_names = ['age', 'job', 'marital', 'education', 'default', 'balance', 

@@ -4,8 +4,8 @@ from sklearn.metrics import accuracy_score
 from id3_algorithms import DecisionTree, information_gain, majority_error, gini_index
 
 # Dataset path
-train_file = "car/train.csv"
-test_file = "car/test.csv"
+train_file = "../Datasets/car/train.csv"
+test_file = "../Datasets/car/test.csv"
 
 # Read data 
 train_data = pd.read_csv(train_file, header=None)

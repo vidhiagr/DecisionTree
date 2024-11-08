@@ -18,8 +18,8 @@ if __name__ == "__main__":
     figures = 0
 
     # (a) Implement Adaboost with Decision Stumps
-    training_examples = nd.open_data('../bank/train.csv')
-    test_examples = nd.open_data('../bank/test.csv')
+    training_examples = nd.open_data('../Datasets//bank/train.csv')
+    test_examples = nd.open_data('../Datasets//bank/test.csv')
     attributes = nd.create_attributes(bank_attribute_names, bank_attribute_vals, training_examples, test_examples)
     one_to_five_hundred = list(range(1, 501))
     
