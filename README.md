@@ -5,15 +5,15 @@ This is a machine learning library developed by Vidhi Agarwal for CS5350/6350 in
 
 How to run:
 
-cd DecisionTree
-python3 car.py
+cd DecisionTree <br />
+python3 car.py <br />
 python3 bank.py
 
-cd EnsembleLearning
+cd EnsembleLearning <br />
 python3 bank.py
 
-cd LinearRegression
+cd LinearRegression <br />
 python3 concrete.py
 
-cd Perceptron
+cd Perceptron <br />
 python3 perceptron.py
