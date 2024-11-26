@@ -17,3 +17,8 @@ python3 concrete.py
 
 cd Perceptron <br />
 python3 perceptron.py
+
+cd SVM  <br />
+python3 svm.py
+python3 svm_dual.py
+python3 svm_gaussian.py
