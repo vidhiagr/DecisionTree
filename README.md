@@ -22,3 +22,10 @@ cd SVM  <br />
 python3 svm.py
 python3 svm_dual.py
 python3 svm_gaussian.py
+
+cd NeuralNetworks  <br />
+python3 nn.py
+python3 sgd.py
+
+cd LogisticRegression <br />
+python3 lr.py
